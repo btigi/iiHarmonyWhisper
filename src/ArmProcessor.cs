@@ -60,57 +60,41 @@ namespace iiCommandersWarShout
             result.Crystal = br.ReadInt16();
             result.Stone = br.ReadInt16();
 
-            var power = new Power();
+            var power1 = new Power();
+            power1.Id = br.ReadInt32();
+            power1.Data1 = br.ReadInt16();
+            power1.Data2 = br.ReadInt16();
+            power1.Data3 = br.ReadInt16();
+            power1.Data4 = br.ReadInt16();
+            power1.PowerUpId = br.ReadInt16();
 
-            power.Id = br.ReadInt32();
-            power.LevelsOfPowerUp = br.ReadInt16();
+            var power2 = new Power();
+            power2.Id = br.ReadInt32();
+            power2.Data1 = br.ReadInt16();
+            power2.Data2 = br.ReadInt16();
+            power2.Data3 = br.ReadInt16();
+            power2.Data4 = br.ReadInt16();
+            power2.PowerUpId = br.ReadInt16();
 
-            var nameBytes = br.ReadBytes(20);
-            power.Name = Encoding.ASCII.GetString(nameBytes).TrimEnd('\0');
+            var power3 = new Power();
+            power3.Id = br.ReadInt32();
+            power3.Data1 = br.ReadInt16();
+            power3.Data2 = br.ReadInt16();
+            power3.Data3 = br.ReadInt16();
+            power3.Data4 = br.ReadInt16();
+            power3.PowerUpId = br.ReadInt16();
 
-            power.Amount1 = br.ReadInt16();
-            power.Amount2 = br.ReadInt16();
-            power.Amount3 = br.ReadInt16();
-            power.Amount4 = br.ReadInt16();
+            var power4 = new Power();
+            power4.Id = br.ReadInt32();
+            power4.Data1 = br.ReadInt16();
+            power4.Data2 = br.ReadInt16();
+            power4.Data3 = br.ReadInt16();
+            power4.Data4 = br.ReadInt16();
+            power4.PowerUpId = br.ReadInt16();
 
-            power.KeepRequirementLevel1 = br.ReadInt16();
-            power.KeepRequirementLevel2 = br.ReadInt16();
-            power.KeepRequirementLevel3 = br.ReadInt16();
-            power.KeepRequirementLevel4 = br.ReadInt16();
-
-            power.SideRequirementsFlag1 = br.ReadInt16();
-            power.SideRequirementsFlag2 = br.ReadInt16();
-            power.SideRequirementsFlag3 = br.ReadInt16();
-            power.SideRequirementsFlag4 = br.ReadInt16();
-
-            power.ResourceCostGold1 = br.ReadInt16();
-            power.ResourceCostMetal1 = br.ReadInt16();
-            power.ResourceCostCrystal1 = br.ReadInt16();
-            power.ResourceCostStone1 = br.ReadInt16();
-
-            power.ResourceCostGold2 = br.ReadInt16();
-            power.ResourceCostMetal2 = br.ReadInt16();
-            power.ResourceCostCrystal2 = br.ReadInt16();
-            power.ResourceCostStone2 = br.ReadInt16();
-
-            power.ResourceCostGold3 = br.ReadInt16();
-            power.ResourceCostMetal3 = br.ReadInt16();
-            power.ResourceCostCrystal3 = br.ReadInt16();
-            power.ResourceCostStone3 = br.ReadInt16();
-
-            power.ResourceCostGold4 = br.ReadInt16();
-            power.ResourceCostMetal4 = br.ReadInt16();
-            power.ResourceCostCrystal4 = br.ReadInt16();
-            power.ResourceCostStone4 = br.ReadInt16();
-
-            power.SecondsToProduce1 = br.ReadInt16();
-            power.SecondsToProduce2 = br.ReadInt16();
-            power.SecondsToProduce3 = br.ReadInt16();
-            power.SecondsToProduce4 = br.ReadInt16();
-
+            _ = br.ReadBytes(40);
 
             result.UnitValue = br.ReadInt16();
-
             result.SetUpPoints = br.ReadInt16();
             result.FidgetRate = br.ReadInt16();
             result.MoveSound = br.ReadInt16();
@@ -127,18 +111,7 @@ namespace iiCommandersWarShout
             result.MoveAmount = br.ReadByte();
             result.MoveAmount = br.ReadByte();
             result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
+
             result.MoveAmount = br.ReadByte();
             result.MoveAmount = br.ReadByte();
             result.MoveAmount = br.ReadByte();
@@ -150,17 +123,40 @@ namespace iiCommandersWarShout
             result.MoveAmount = br.ReadByte();
             result.MoveAmount = br.ReadByte();
 
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+
+            result.MoveAmount = br.ReadByte();
+            result.MoveAmount = br.ReadByte();
+
+            _ = br.ReadByte();
+
             result.BonesType = br.ReadInt16();
             result.DefaultAttitude = br.ReadInt16();
+
+            var moveFineTuning1 = br.ReadInt16();
+            var moveFineTuning2 = br.ReadInt16();
+            var moveFineTuning3 = br.ReadInt16();
+            var moveFineTuning4 = br.ReadInt16();
+
             result.AttackType = br.ReadInt16();
             result.ShadowType = br.ReadInt16();
             result.Flags = br.ReadInt16();
             result.SpeechFiles = br.ReadInt16();
             result.SkinType = br.ReadInt16();
             result.DeathScream = br.ReadInt16();
-            result.CombatPointX = br.ReadInt16();
+
+            result.CombatPointX = br.ReadInt16(); // 8 entries
             result.CombatPointY = br.ReadInt16();
-            //public bool Wake { get; set; } // 8 entries
+            //Wake { get; set; } // 8 entries
 
             return null;
         }
@@ -221,39 +217,10 @@ namespace iiCommandersWarShout
     public class Power
     {
         public int Id { get; set; }
-        public Int16 LevelsOfPowerUp { get; set; }
-        public string Name { get; set; } // 20
-        public Int16 Amount1 { get; set; }
-        public Int16 Amount2 { get; set; }
-        public Int16 Amount3 { get; set; }
-        public Int16 Amount4 { get; set; }
-        public Int16 KeepRequirementLevel1 { get; set; }
-        public Int16 KeepRequirementLevel2 { get; set; }
-        public Int16 KeepRequirementLevel3 { get; set; }
-        public Int16 KeepRequirementLevel4 { get; set; }
-        public Int16 SideRequirementsFlag1 { get; set; }
-        public Int16 SideRequirementsFlag2 { get; set; }
-        public Int16 SideRequirementsFlag3 { get; set; }
-        public Int16 SideRequirementsFlag4 { get; set; }
-        public Int16 ResourceCostGold1 { get; set; }
-        public Int16 ResourceCostMetal1 { get; set; }
-        public Int16 ResourceCostCrystal1 { get; set; }
-        public Int16 ResourceCostStone1 { get; set; }
-        public Int16 ResourceCostGold2 { get; set; }
-        public Int16 ResourceCostMetal2 { get; set; }
-        public Int16 ResourceCostCrystal2 { get; set; }
-        public Int16 ResourceCostStone2 { get; set; }
-        public Int16 ResourceCostGold3 { get; set; }
-        public Int16 ResourceCostMetal3 { get; set; }
-        public Int16 ResourceCostCrystal3 { get; set; }
-        public Int16 ResourceCostStone3 { get; set; }
-        public Int16 ResourceCostGold4 { get; set; }
-        public Int16 ResourceCostMetal4 { get; set; }
-        public Int16 ResourceCostCrystal4 { get; set; }
-        public Int16 ResourceCostStone4 { get; set; }
-        public Int16 SecondsToProduce1 { get; set; }
-        public Int16 SecondsToProduce2 { get; set; }
-        public Int16 SecondsToProduce3 { get; set; }
-        public Int16 SecondsToProduce4 { get; set; }
+        public int Data1 { get; set; }
+        public int Data2 { get; set; }
+        public int Data3 { get; set; }
+        public int Data4 { get; set; }
+        public int PowerUpId { get; set; }
     }
 }
