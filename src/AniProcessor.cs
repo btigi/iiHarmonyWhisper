@@ -1,4 +1,4 @@
-﻿namespace iiCommandersWarShout
+﻿namespace iiHarmonyWhisper
 {
     public class AniFile
     {

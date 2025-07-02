@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace iiCommandersWarShout
+namespace iiHarmonyWhisper
 {
     public class ArmProcessor
     {
