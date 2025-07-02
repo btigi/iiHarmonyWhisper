@@ -213,14 +213,4 @@ namespace iiHarmonyWhisper
         public Int16 CombatPointY { get; set; }
         public bool Wake { get; set; } // 8 entries
     }
-
-    public class Power
-    {
-        public int Id { get; set; }
-        public int Data1 { get; set; }
-        public int Data2 { get; set; }
-        public int Data3 { get; set; }
-        public int Data4 { get; set; }
-        public int PowerUpId { get; set; }
-    }
 }
