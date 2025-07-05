@@ -22,11 +22,21 @@ namespace iiHarmonyWhisper
         public Int16 Reserved2 { get; set; }
     }
 
+    public class XcrFileResult
+    {
+        public XcrFile FileInfo { get; set; }
+        public byte[] Data { get; set; }
+        public bool IsValid { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+
     public class XcrProcessor
     {
-        public List<(XcrFile fileInfo, byte[])> Read(string filename)
+        const string XCR_SIGNATURE = "xcr File 1.00.\\..:&.";
+
+        public List<XcrFileResult> Read(string filename)
         {
-            var result = new List<(XcrFile fileInfo, byte[])>();
+            var result = new List<XcrFileResult>();
 
             using var br = new BinaryReader(File.OpenRead(filename));
             var signature = br.ReadBytes(20);
@@ -56,7 +66,23 @@ namespace iiHarmonyWhisper
             {
                 br.BaseStream.Seek(file.FileOffset, SeekOrigin.Begin);
                 var fileData = br.ReadBytes(file.FileLength);
-                result.Add((file, fileData));
+
+                var xcrFileResult = new XcrFileResult();
+                xcrFileResult.IsValid = true;
+
+                if (file.Checksummed > 0)
+                {
+                    var calculatedChecksum = CalculateXorChecksum(fileData);
+                    if (calculatedChecksum != file.Checksum)
+                    {
+                        xcrFileResult.IsValid = false;
+                        xcrFileResult.ErrorMessage = "Invalid checkum";
+                    }
+                }
+
+                xcrFileResult.Data = fileData;
+                xcrFileResult.FileInfo = file;
+                result.Add(xcrFileResult);
             }
 
             return result;
@@ -67,5 +93,20 @@ namespace iiHarmonyWhisper
             int index = input.IndexOf('\0');
             return index < 0 ? input : input.Substring(0, index);
         }
-    }
+
+        private static int CalculateXorChecksum(byte[] data)
+        {
+            uint checksum = 0;
+            for (int i = 0; i < data.Length; i += 4)
+            {
+                uint value = 0;
+                for (int j = 0; j < 4 && i + j < data.Length; j++)
+                {
+                    value |= (uint)(data[i + j] << (j * 8));
+                }
+                checksum ^= value;
+            }
+            return (int)checksum;
+        }
+   }
 }
