@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using iiHarmonyWhisper.Models;
+using iiHarmonyWhisper.Helpers;
 
 namespace iiHarmonyWhisper
 {
@@ -11,7 +12,7 @@ namespace iiHarmonyWhisper
 
             using var br = new BinaryReader(File.OpenRead(filename));
             result.Id = br.ReadInt32();
-            result.Name = TrimFromNull(Encoding.ASCII.GetString(br.ReadBytes(20)));
+            result.Name = StringHelper.TrimFromNull(Encoding.ASCII.GetString(br.ReadBytes(20)));
             result.Width = br.ReadByte();
             result.Height = br.ReadByte();
             result.Exclusion = new short[16];
@@ -29,12 +30,6 @@ namespace iiHarmonyWhisper
             }
 
             return result;
-        }
-
-        private static string TrimFromNull(string input)
-        {
-            int index = input.IndexOf('\0');
-            return index < 0 ? input : input.Substring(0, index);
         }
     }
 }

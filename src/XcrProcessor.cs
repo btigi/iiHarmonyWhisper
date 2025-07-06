@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using iiHarmonyWhisper.Models;
+using iiHarmonyWhisper.Helpers;
 
 namespace iiHarmonyWhisper
 {
@@ -22,8 +23,8 @@ namespace iiHarmonyWhisper
             {
                 var xcrFile = new XcrFile
                 {
-                    Filename = TrimFromNull(Encoding.ASCII.GetString(br.ReadBytes(256))),
-                    Directory = TrimFromNull(Encoding.ASCII.GetString(br.ReadBytes(256))),
+                    Filename = StringHelper.TrimFromNull(Encoding.ASCII.GetString(br.ReadBytes(256))),
+                    Directory = StringHelper.TrimFromNull(Encoding.ASCII.GetString(br.ReadBytes(256))),
                     FileOffset = br.ReadInt32(),
                     FileLength = br.ReadInt32(),
                     Reserved = br.ReadInt32(),
@@ -195,12 +196,6 @@ namespace iiHarmonyWhisper
                 Array.Copy(stringBytes, bytes, Math.Min(stringBytes.Length, size - 1)); // Leave room for null terminator
             }
             bw.Write(bytes);
-        }
-
-        private static string TrimFromNull(string input)
-        {
-            int index = input.IndexOf('\0');
-            return index < 0 ? input : input.Substring(0, index);
         }
 
         private static int CalculateXorChecksum(byte[] data)
