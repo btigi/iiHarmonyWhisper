@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using iiHarmonyWhisper.Models;
+using iiHarmonyWhisper.Helpers;
 
 namespace iiHarmonyWhisper
 {
@@ -15,7 +16,7 @@ namespace iiHarmonyWhisper
             result.MovementType = br.ReadByte();
 
             var name = br.ReadBytes(20);
-            result.ArmyName = Encoding.ASCII.GetString(name);
+            result.ArmyName = StringHelper.TrimFromNull(Encoding.ASCII.GetString(name));
 
             result.SideRequirementsFlag = br.ReadInt16();
             result.SecondsToProduce = br.ReadInt16();
@@ -35,22 +36,10 @@ namespace iiHarmonyWhisper
             result.Width = br.ReadByte();
             result.Height = br.ReadByte();
 
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
-            result.Exclusion = br.ReadInt16();
+            for (int i = 0; i < 16; i++)
+            {
+                result.Exclusion[i] = br.ReadInt16();
+            }
 
             result.PsychStrength = br.ReadByte();
             result.PsychType = br.ReadByte();
@@ -61,92 +50,38 @@ namespace iiHarmonyWhisper
             result.Crystal = br.ReadInt16();
             result.Stone = br.ReadInt16();
 
-            var power1 = new Power();
-            power1.Id = br.ReadInt32();
-            power1.Data1 = br.ReadInt16();
-            power1.Data2 = br.ReadInt16();
-            power1.Data3 = br.ReadInt16();
-            power1.Data4 = br.ReadInt16();
-            power1.PowerUpId = br.ReadInt16();
+            for (int i = 0; i < 4; i++)
+            {
+                var power = new Power();
+                power.Id = br.ReadInt32();
+                power.Data1 = br.ReadInt16();
+                power.Data2 = br.ReadInt16();
+                power.Data3 = br.ReadInt16();
+                power.Data4 = br.ReadInt16();
+                power.PowerUpId = br.ReadInt16();
+                result.Powers[i] = power;
+            }
 
-            var power2 = new Power();
-            power2.Id = br.ReadInt32();
-            power2.Data1 = br.ReadInt16();
-            power2.Data2 = br.ReadInt16();
-            power2.Data3 = br.ReadInt16();
-            power2.Data4 = br.ReadInt16();
-            power2.PowerUpId = br.ReadInt16();
-
-            var power3 = new Power();
-            power3.Id = br.ReadInt32();
-            power3.Data1 = br.ReadInt16();
-            power3.Data2 = br.ReadInt16();
-            power3.Data3 = br.ReadInt16();
-            power3.Data4 = br.ReadInt16();
-            power3.PowerUpId = br.ReadInt16();
-
-            var power4 = new Power();
-            power4.Id = br.ReadInt32();
-            power4.Data1 = br.ReadInt16();
-            power4.Data2 = br.ReadInt16();
-            power4.Data3 = br.ReadInt16();
-            power4.Data4 = br.ReadInt16();
-            power4.PowerUpId = br.ReadInt16();
-
-            _ = br.ReadBytes(40);
+            _ = br.ReadBytes(40); // Skip 40 bytes
 
             result.UnitValue = br.ReadInt16();
             result.SetUpPoints = br.ReadInt16();
             result.FidgetRate = br.ReadInt16();
             result.MoveSound = br.ReadInt16();
             result.CombatSound = br.ReadInt16();
-            result.AmbientSound = br.ReadBoolean();
+            result.AmbientSound = br.ReadByte();
 
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-
-            result.MoveAmount = br.ReadByte();
-            result.MoveAmount = br.ReadByte();
-
-            _ = br.ReadByte();
-
+            for (int i = 0; i < 32; i++)
+            {
+                result.MoveAmount[i] = br.ReadByte();
+            }
             result.BonesType = br.ReadInt16();
             result.DefaultAttitude = br.ReadInt16();
 
-            var moveFineTuning1 = br.ReadInt16();
-            var moveFineTuning2 = br.ReadInt16();
-            var moveFineTuning3 = br.ReadInt16();
-            var moveFineTuning4 = br.ReadInt16();
+            for (int i = 0; i < 4; i++)
+            {
+                result.MoveFineTuning[i] = br.ReadInt16();
+            }
 
             result.AttackType = br.ReadInt16();
             result.ShadowType = br.ReadInt16();
@@ -155,11 +90,151 @@ namespace iiHarmonyWhisper
             result.SkinType = br.ReadInt16();
             result.DeathScream = br.ReadInt16();
 
-            result.CombatPointX = br.ReadInt16(); // 8 entries
-            result.CombatPointY = br.ReadInt16();
-            //Wake { get; set; } // 8 entries
+            for (int i = 0; i < 8; i++)
+            {
+                result.CombatPoints[i] = new ArmPoint
+                {
+                    X = br.ReadInt16(),
+                    Y = br.ReadInt16()
+                };
+            }
+
+            for (int i = 0; i < 8; i++)
+            {
+                result.WakePoints[i] = new ArmPoint
+                {
+                    X = br.ReadInt16(),
+                    Y = br.ReadInt16()
+                };
+            }
+
+            result.Unknown1 = br.ReadByte();
+            result.Unknown2 = br.ReadByte();
+            result.Unknown3 = br.ReadByte();
 
             return result;
+        }
+       
+        public void Write(ArmFile armFile, string filename)
+        {
+            var data = Write(armFile);
+            File.WriteAllBytes(filename, data);
+        }
+
+        public byte[] Write(ArmFile armFile)
+        {
+            using var ms = new MemoryStream();
+            using var bw = new BinaryWriter(ms);
+
+            bw.Write(armFile.Id);
+            bw.Write(armFile.UseDefaultData);
+            bw.Write(armFile.MovementType);
+
+            // Write army name as 20-byte fixed string
+            WriteFixedString(bw, armFile.ArmyName, 20);
+
+            bw.Write(armFile.SideRequirementsFlag);
+            bw.Write(armFile.SecondsToProduce);
+            bw.Write(armFile.Combat);
+            bw.Write(armFile.Speed);
+            bw.Write(armFile.Resistance);
+            bw.Write(armFile.Hits);
+            bw.Write(armFile.View);
+            bw.Write(armFile.Armor);
+            bw.Write(armFile.StrongType);
+            bw.Write(armFile.WeakType);
+            bw.Write(armFile.Unused1);
+            bw.Write(armFile.Unused2);
+            bw.Write(armFile.Damage);
+            bw.Write(armFile.DamageType);
+            bw.Write(armFile.DamageRange);
+            bw.Write(armFile.Width);
+            bw.Write(armFile.Height);
+
+            for (int i = 0; i < 16; i++)
+            {
+                bw.Write(armFile.Exclusion[i]);
+            }
+
+            bw.Write(armFile.PsychStrength);
+            bw.Write(armFile.PsychType);
+            bw.Write(armFile.PsychRange);
+
+            bw.Write(armFile.Gold);
+            bw.Write(armFile.Metal);
+            bw.Write(armFile.Crystal);
+            bw.Write(armFile.Stone);
+
+            for (int i = 0; i < 4; i++)
+            {
+                var power = armFile.Powers[i] ?? new Power();
+                bw.Write(power.Id);
+                bw.Write(power.Data1);
+                bw.Write(power.Data2);
+                bw.Write(power.Data3);
+                bw.Write(power.Data4);
+                bw.Write(power.PowerUpId);
+            }
+
+            bw.Write(new byte[40]);
+
+            bw.Write(armFile.UnitValue);
+            bw.Write(armFile.SetUpPoints);
+            bw.Write(armFile.FidgetRate);
+            bw.Write(armFile.MoveSound);
+            bw.Write(armFile.CombatSound);
+            bw.Write(armFile.AmbientSound);
+
+            for (int i = 0; i < 32; i++)
+            {
+                bw.Write(armFile.MoveAmount[i]);
+            }
+
+            bw.Write(armFile.BonesType);
+            bw.Write(armFile.DefaultAttitude);
+
+            for (int i = 0; i < 4; i++)
+            {
+                bw.Write(armFile.MoveFineTuning[i]);
+            }
+
+            bw.Write(armFile.AttackType);
+            bw.Write(armFile.ShadowType);
+            bw.Write(armFile.Flags);
+            bw.Write(armFile.SpeechFiles);
+            bw.Write(armFile.SkinType);
+            bw.Write(armFile.DeathScream);
+
+            for (int i = 0; i < 8; i++)
+            {
+                var point = armFile.CombatPoints[i] ?? new ArmPoint();
+                bw.Write(point.X);
+                bw.Write(point.Y);
+            }
+
+            for (int i = 0; i < 8; i++)
+            {
+                var point = armFile.WakePoints[i] ?? new ArmPoint();
+                bw.Write(point.X);
+                bw.Write(point.Y);
+            }
+
+            bw.Write(armFile.Unknown1);
+            bw.Write(armFile.Unknown2);
+            bw.Write(armFile.Unknown3);
+
+            return ms.ToArray();
+        }
+
+        private void WriteFixedString(BinaryWriter bw, string value, int size)
+        {
+            var bytes = new byte[size];
+            if (!string.IsNullOrEmpty(value))
+            {
+                var stringBytes = Encoding.ASCII.GetBytes(value);
+                Array.Copy(stringBytes, bytes, Math.Min(stringBytes.Length, size - 1)); // Leave room for null terminator
+            }
+            bw.Write(bytes);
         }
     }
 }
